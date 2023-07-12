@@ -107,4 +107,17 @@ class PengaturanController extends Controller
             }
         }
     }
+
+    public function nonaktif()
+    {
+        return view('backend.pengaturan.nonaktif');
+    }
+
+    public function updateStatus()
+    {
+        User::whereId(auth()->user()->id)->update([
+            'active_status' => '1'
+        ]);
+        return response()->json(['success' => 'Akun berhasil di nonaktifkan']);
+    }
 }

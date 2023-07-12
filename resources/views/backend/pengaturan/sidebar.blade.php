@@ -11,7 +11,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="delete-account.html" class="nav-link">
+            <a href="{{ route('pengaturan.nonaktif') }}" class="nav-link">
                 <i class="fas fa-ban"></i> <span>Nonaktifkan Akun</span>
             </a>
         </li>
