@@ -61,6 +61,9 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     //Pengaturan
     Route::get('/pengaturan/profile', [PengaturanController::class, 'profile'])->name('pengaturan.profile');
     Route::post('/pengaturan/profile/{profile}', [PengaturanController::class, 'updateProfile'])->name('pengaturan.updateProfile');
+
+    Route::get('/pengaturan/ganti-password', [PengaturanController::class, 'gantiPassword'])->name('pengaturan.gantiPassword');
+    Route::post('/pengaturan/ganti-password', [PengaturanController::class, 'updatePassword'])->name('pengaturan.updatePassword');
 });
 
 /*------------------------------------------
