@@ -26,6 +26,8 @@ class PengaturanController extends Controller
                 'email' => 'required|string|unique:users,email,' . $id,
                 'foto' => 'image|mimes:jpg,png,jpeg,webp,svg',
                 'no_telepon' => 'required',
+                'gender' => 'required',
+                'address' => 'required',
             ],
             [
                 'name.required' => 'Silakan isi nama terlebih dahulu!',
@@ -34,6 +36,8 @@ class PengaturanController extends Controller
                 'foto.image' => 'File harus berupa gambar!, ',
                 'foto.mimes' => 'Gambar yang diunggah harus dalam format JPG, PNG, JPEG, WEBP, atau SVG.',
                 'no_telepon.required' => 'Silakan isi no telepon terlebih dahulu!',
+                'gender.required' => 'Silakan isi jenis kelamin terlebih dahulu!',
+                'address.required' => 'Silakan isi alamat terlebih dahulu!',
             ]
         );
 
@@ -55,6 +59,8 @@ class PengaturanController extends Controller
                     $user->name = $request->name;
                     $user->email = $request->email;
                     $user->no_telepon = $request->no_telepon;
+                    $user->gender = $request->gender;
+                    $user->address = $request->address;
                     $user->avatar = $request->name . '.' . $guessExtension;
                     $user->save();
 
@@ -66,6 +72,8 @@ class PengaturanController extends Controller
                 $user->name = $request->name;
                 $user->email = $request->email;
                 $user->no_telepon = $request->no_telepon;
+                $user->gender = $request->gender;
+                $user->address = $request->address;
                 $user->save();
 
                 return response()->json(['success' => 'Data barhasil diperbarui']);

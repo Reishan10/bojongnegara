@@ -18,7 +18,6 @@ class KategoriController extends Controller
             return DataTables::of($kategori)
                 ->addIndexColumn()
                 ->addColumn('comboBox', function ($data) {
-                    // $comboBox = "<input type='checkbox' class='checkbox' data-id='" . $data->id . "'>";
                     $comboBox = "<label class='custom_check'>
                                     <input type='checkbox' id='checkbox' data-id='" . $data->id . "'>
                                     <span class='checkmark'></span>
@@ -26,7 +25,6 @@ class KategoriController extends Controller
                     return $comboBox;
                 })
                 ->addColumn('aksi', function ($data) {
-                    // return view('backend.kategori.button')->with('data', $data);
                     $btn = '<button type="button" class="btn btn-sm btn-white text-success me-2" data-id="' . $data->id . '" id="btnEdit"><i class="far fa-edit me-1"></i>Edit</button>';
                     $btn = $btn . '<button type="button" class="btn btn-sm btn-white text-danger me-2" data-id="' . $data->id . '" id="btnHapus"><i class="far fa-trash-alt me-1"></i>Hapus</button>';
                     return $btn;

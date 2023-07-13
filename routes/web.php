@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\KategoriController;
 use App\Http\Controllers\Backend\PengaturanController;
+use App\Http\Controllers\Backend\PenggunaController;
 use App\Http\Controllers\Backend\TagController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,15 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::post('/tag', [TagController::class, 'store'])->name('tag.store');
     Route::get('/tag/{tag}/edit', [TagController::class, 'edit'])->name('tag.edit');
     Route::delete('tag/{tag}', [TagController::class, 'destroy'])->name('tag.destroy');
+
+    // Pengguna
+    Route::post('/pengguna/delete-multiple-pengguna', [PenggunaController::class, 'deleteMultiple'])->name('delete-multiple-pengguna');
+    Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+    Route::get('/pengguna/tambah', [PenggunaController::class, 'create'])->name('pengguna.create');
+    Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+    Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+    Route::post('/pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
+    Route::delete('pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 
     //Pengaturan
     Route::get('/pengaturan/profile', [PengaturanController::class, 'profile'])->name('pengaturan.profile');

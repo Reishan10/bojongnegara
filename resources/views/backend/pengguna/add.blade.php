@@ -1,92 +1,81 @@
 @extends('layouts.backend_main')
-@section('title', 'Pengaturan')
+@section('title', 'Tambah Pengguna')
 @section('content')
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col">
                         <h3 class="page-title">@yield('title')</h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">Pengguna</a></li>
                             <li class="breadcrumb-item active">@yield('title')</li>
                         </ul>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('pengguna.index') }}" class="btn btn-secondary btn-blog mb-3"><i
+                                class="fa-solid fa-rotate-left"></i>
+                            Kembali</a>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-3 col-md-4">
-                    @include('backend.pengaturan.sidebar')
-                </div>
-                <div class="col-xl-9 col-md-8">
+                <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Profile</h5>
-                        </div>
                         <div class="card-body">
                             <form id="form">
                                 <div class="row form-group">
-                                    <input type="hidden" name="id" id="id" value="{{ auth()->user()->id }}">
-                                    <label for="foto" class="col-sm-3 col-form-label input-label">Foto</label>
-                                    <div class="col-sm-9">
-                                        <div class="d-flex align-items-center">
-                                            <label class="avatar avatar-xxl profile-cover-avatar m-0" for="foto">
-                                                <img id="fotoPreview" class="avatar-img"
-                                                    src="{{ auth()->user()->avatar == '' ? 'https://ui-avatars.com/api/?background=random&name=' . auth()->user()->name : asset('storage/avatar/' . auth()->user()->avatar) }}"
-                                                    alt="Profile Image">
-                                                <input type="file" id="foto" name="foto"
-                                                    onchange="previewFoto(this)">
-                                                <span class="avatar-edit">
-                                                    <i data-feather="edit-2" class="avatar-uploader-icon shadow-soft"></i>
-                                                </span>
-                                            </label>
-                                        </div>
-                                        <small class="text-danger errorFoto"></small>
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <label for="name" class="col-sm-3 col-form-label input-label">Nama</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            value="{{ auth()->user()->name }}">
+                                    <label for="name" class="col-sm-2 col-form-label input-label">Nama</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" name="name">
                                         <small class="text-danger errorName"></small>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="email" class="col-sm-3 col-form-label input-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            value="{{ auth()->user()->email }}">
+                                    <label for="email" class="col-sm-2 col-form-label input-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" name="email">
                                         <small class="text-danger errorEmail"></small>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="no_telepon" class="col-sm-3 col-form-label input-label">No Telepon</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="no_telepon" name="no_telepon"
-                                            value="{{ auth()->user()->no_telepon }}">
+                                    <label for="no_telepon" class="col-sm-2 col-form-label input-label">No Telepon</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="no_telepon" name="no_telepon">
                                         <small class="text-danger errorNoTelepon"></small>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="gender" class="col-sm-3 col-form-label input-label">Jenis Kelamin</label>
-                                    <div class="col-sm-9">
+                                    <label for="gender" class="col-sm-2 col-form-label input-label">Jenis Kelamin</label>
+                                    <div class="col-sm-10">
                                         <select name="gender" id="gender" class="form-control">
                                             <option value="">-- Pilih jenis kelamin --</option>
-                                            <option value="Laki-laki" {{ auth()->user()->gender == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                                            <option value="Perempuan" {{ auth()->user()->gender == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
                                         </select>
                                         <small class="text-danger errorGender"></small>
                                     </div>
                                 </div>
                                 <div class="row form-group">
-                                    <label for="address" class="col-sm-3 col-form-label input-label">Alamat</label>
-                                    <div class="col-sm-9">
-                                        <textarea name="address" id="address" rows="3" class="form-control">{{ auth()->user()->address }}</textarea>
+                                    <label for="address" class="col-sm-2 col-form-label input-label">Alamat</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="address" id="address" rows="3" class="form-control"></textarea>
                                         <small class="text-danger errorAddress"></small>
                                     </div>
                                 </div>
-                                <div class="text-end">
+                                <div class="row form-group">
+                                    <label for="type" class="col-sm-2 col-form-label input-label">Tipe</label>
+                                    <div class="col-sm-10">
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="">-- Pilih tipe --</option>
+                                            <option value="0">Administrator</option>
+                                            <option value="1">Perangkat</option>
+                                        </select>
+                                        <small class="text-danger errorType"></small>
+                                    </div>
+                                </div>
+                                <div class="text-end mt-4">
                                     <button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
                                 </div>
                             </form>
@@ -98,17 +87,6 @@
     </div>
 
     <script>
-        function previewFoto(input) {
-            var fotoPreview = document.getElementById('fotoPreview');
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    fotoPreview.setAttribute('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
@@ -119,13 +97,10 @@
             $('#form').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
-                    data: new FormData(this),
-                    url: "{{ url('/pengaturan/profile/"+id+"') }}",
+                    data: $(this).serialize(),
+                    url: "{{ route('pengguna.store') }}",
                     type: "POST",
                     dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    cache: false,
                     beforeSend: function() {
                         $('#simpan').attr('disable', 'disabled');
                         $('#simpan').text('Proses...');
@@ -136,48 +111,59 @@
                     },
                     success: function(response) {
                         if (response.errors) {
-                            if (response.errors.foto) {
-                                $('.errorFoto').html(response.errors.foto);
-                            } else {
-                                $('.errorFoto').html('');
-                            }
-
                             if (response.errors.name) {
+                                $('#name').addClass('is-invalid');
                                 $('.errorName').html(response.errors.name);
                             } else {
+                                $('#name').removeClass('is-invalid');
                                 $('.errorName').html('');
                             }
-
                             if (response.errors.email) {
+                                $('#email').addClass('is-invalid');
                                 $('.errorEmail').html(response.errors.email);
                             } else {
+                                $('#email').removeClass('is-invalid');
                                 $('.errorEmail').html('');
                             }
 
                             if (response.errors.no_telepon) {
+                                $('#no_telepon').addClass('is-invalid');
                                 $('.errorNoTelepon').html(response.errors.no_telepon);
                             } else {
+                                $('#no_telepon').removeClass('is-invalid');
                                 $('.errorNoTelepon').html('');
                             }
 
                             if (response.errors.gender) {
+                                $('#gender').addClass('is-invalid');
                                 $('.errorGender').html(response.errors.gender);
                             } else {
+                                $('#gender').removeClass('is-invalid');
                                 $('.errorGender').html('');
                             }
 
                             if (response.errors.address) {
+                                $('#address').addClass('is-invalid');
                                 $('.errorAddress').html(response.errors.address);
                             } else {
+                                $('#address').removeClass('is-invalid');
                                 $('.errorAddress').html('');
+                            }
+
+                            if (response.errors.type) {
+                                $('#type').addClass('is-invalid');
+                                $('.errorType').html(response.errors.type);
+                            } else {
+                                $('#type').removeClass('is-invalid');
+                                $('.errorType').html('');
                             }
                         } else {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Sukses',
-                                text: response.success,
+                                text: 'Data berhasil disimpan',
                             }).then(function() {
-                                top.location.href = "{{ route('pengaturan.profile') }}";
+                                top.location.href = "{{ route('pengguna.index') }}";
                             });
                         }
                     },

@@ -3,8 +3,8 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title"><span>Main</span></li>
-                <li>
-                    <a href="index.html"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <li class="{{ request()->is('dashboard*') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.index') }}"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
                 </li>
                 <li
                     class="submenu {{ request()->is('berita*') ? 'active' : '' }} {{ request()->is('kategori') ? 'active' : '' }}  {{ request()->is('tag') ? 'active' : '' }}">
@@ -40,8 +40,8 @@
                 <li>
                     <a href=""><i class="fa-solid fa-envelope"></i> <span>Pesan</span></a>
                 </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-users"></i> <span>Pengguna</span></a>
+                <li class="{{ request()->is('pengguna*') ? 'active' : '' }}">
+                    <a href="{{ route('pengguna.index') }}"><i class="fa-solid fa-users"></i> <span>Pengguna</span></a>
                 </li>
                 <li class="{{ request()->is('pengaturan*') ? 'active' : '' }}">
                     <a href="{{ route('pengaturan.profile') }}"><i data-feather="settings"></i>
