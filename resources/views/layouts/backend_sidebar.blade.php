@@ -40,6 +40,10 @@
                 <li>
                     <a href=""><i class="fa-solid fa-envelope"></i> <span>Pesan</span></a>
                 </li>
+                <li class="{{ request()->is('layanan*') ? 'active' : '' }}">
+                    <a href="{{ route('layanan.index') }}"><i class="fa-solid fa-thumbs-up"></i>
+                        <span>Layanan</span></a>
+                </li>
                 <li class="{{ request()->is('pengguna*') ? 'active' : '' }}">
                     <a href="{{ route('pengguna.index') }}"><i class="fa-solid fa-users"></i> <span>Pengguna</span></a>
                 </li>

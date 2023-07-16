@@ -139,10 +139,8 @@
                                 $('.errorTitle').html('');
                             }
                             if (response.errors.content) {
-                                $('#content').addClass('is-invalid');
                                 $('.errorContent').html(response.errors.content);
                             } else {
-                                $('#content').removeClass('is-invalid');
                                 $('.errorContent').html('');
                             }
 

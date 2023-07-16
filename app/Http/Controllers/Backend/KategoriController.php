@@ -41,41 +41,24 @@ class KategoriController extends Controller
         $validated = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:kategori,name,' . $id,
+                'name' => 'required|unique:kategori,name,' . $id
             ],
             [
                 'name.required' => 'Silakan isi nama terlebih dahulu!',
-                'name.unique' => 'Nama sudah tersedia!',
+                'name.unique' => 'Kategori sudah tersedia!',
             ]
         );
 
         if ($validated->fails()) {
             return response()->json(['errors' => $validated->errors()]);
         } else {
-            $id = $request->id;
-
-            $validated = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required|unique:kategori,name,' . $id
-                ],
-                [
-                    'name.required' => 'Silakan isi nama terlebih dahulu!',
-                    'name.unique' => 'Kategori sudah tersedia!',
-                ]
-            );
-
-            if ($validated->fails()) {
-                return response()->json(['errors' => $validated->errors()]);
-            } else {
-                $kategori = Kategori::updateOrCreate([
-                    'id' => $id
-                ], [
-                    'name' => $request->name,
-                    'slug' => Str::slug($request->name)
-                ]);
-                return response()->json($kategori);
-            }
+            $kategori = Kategori::updateOrCreate([
+                'id' => $id
+            ], [
+                'name' => $request->name,
+                'slug' => Str::slug($request->name)
+            ]);
+            return response()->json($kategori);
         }
     }
 

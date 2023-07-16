@@ -33,8 +33,11 @@
                         <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                             <div class="blog grid-blog flex-fill">
                                 <div class="blog-image">
-                                    <a href="blog-details.html"><img class="img-fluid" src="assets/img/category/blog-1.jpg"
-                                            alt="Post Image"></a>
+                                    <a href="blog-details.html">
+                                        <img class="img-fluid" src="{{ asset('storage/thumbnail/' . $row->image) }}"
+                                            alt="Thumbnail - {{ $row->title }}" alt="Post Image">
+                                    </a>
+
                                     <div class="blog-views">
                                         <i class="feather-eye me-1"></i> {{ $row->views }}
                                     </div>

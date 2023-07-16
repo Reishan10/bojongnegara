@@ -53,12 +53,18 @@ class LoginController extends Controller
         ]);
 
         $credentials = $request->only('username', 'password');
-        $user = User::where('email', $credentials['username'])
-            ->orWhere('no_telepon', $credentials['username'])
+        $user = User::where(function ($query) use ($credentials) {
+            $query->where('email', $credentials['username'])
+                ->orWhere('no_telepon', $credentials['username']);
+        })
             ->first();
 
         if (!$user) {
             return redirect()->back()->with(['message' => 'Username tidak tersedia.']);
+        }
+
+        if ($user->active_status == 1) {
+            return redirect()->back()->with(['message' => 'Akun anda telah di nonaktifkan.']);
         }
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
@@ -74,6 +80,7 @@ class LoginController extends Controller
             return redirect()->back()->with(['message' => 'Password salah.']);
         }
     }
+
 
     public function username()
     {

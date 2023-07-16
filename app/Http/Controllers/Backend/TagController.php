@@ -37,43 +37,27 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $id = $request->id;
+
         $validated = Validator::make(
             $request->all(),
             [
-                'name' => 'required|unique:tag,name,' . $id,
+                'name' => 'required|unique:tag,name,' . $id
             ],
             [
                 'name.required' => 'Silakan isi nama terlebih dahulu!',
-                'name.unique' => 'Nama sudah tersedia!',
+                'name.unique' => 'Tag sudah tersedia!',
             ]
         );
 
         if ($validated->fails()) {
             return response()->json(['errors' => $validated->errors()]);
         } else {
-            $id = $request->id;
-
-            $validated = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required|unique:tag,name,' . $id
-                ],
-                [
-                    'name.required' => 'Silakan isi nama terlebih dahulu!',
-                    'name.unique' => 'Tag sudah tersedia!',
-                ]
-            );
-
-            if ($validated->fails()) {
-                return response()->json(['errors' => $validated->errors()]);
-            } else {
-                $tag = Tag::updateOrCreate([
-                    'id' => $id
-                ], [
-                    'name' => $request->name,
-                ]);
-                return response()->json($tag);
-            }
+            $tag = Tag::updateOrCreate([
+                'id' => $id
+            ], [
+                'name' => $request->name,
+            ]);
+            return response()->json($tag);
         }
     }
 

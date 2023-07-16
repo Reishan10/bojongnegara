@@ -40,9 +40,9 @@
                             <label class="custom-control-label" for="remember">Ingat saya</label>
                         </div>
                     </div>
-                    <div class="col-6 text-end">
+                    {{-- <div class="col-6 text-end">
                         <a class="forgot-link" href="forgot-password.html">Lupa Password ?</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <button class="btn btn-lg btn-block btn-primary w-100" type="submit">Login</button>

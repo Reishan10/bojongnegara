@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\KategoriController;
+use App\Http\Controllers\Backend\LayananController;
 use App\Http\Controllers\Backend\PengaturanController;
 use App\Http\Controllers\Backend\PenggunaController;
 use App\Http\Controllers\Backend\TagController;
@@ -58,6 +59,15 @@ Route::middleware(['auth', 'user-access:Administrator'])->group(function () {
     Route::post('/tag', [TagController::class, 'store'])->name('tag.store');
     Route::get('/tag/{tag}/edit', [TagController::class, 'edit'])->name('tag.edit');
     Route::delete('tag/{tag}', [TagController::class, 'destroy'])->name('tag.destroy');
+
+    // Layanan
+    Route::post('/layanan/delete-multiple-layanan', [LayananController::class, 'deleteMultiple'])->name('delete-multiple-layanan');
+    Route::get('/layanan', [LayananController::class, 'index'])->name('layanan.index');
+    Route::get('/layanan/tambah', [LayananController::class, 'create'])->name('layanan.create');
+    Route::post('/layanan', [LayananController::class, 'store'])->name('layanan.store');
+    Route::get('/layanan/{layanan}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
+    Route::post('/layanan/{layanan}', [LayananController::class, 'update'])->name('layanan.update');
+    Route::delete('layanan/{layanan}', [LayananController::class, 'destroy'])->name('layanan.destroy');
 
     // Pengguna
     Route::post('/pengguna/delete-multiple-pengguna', [PenggunaController::class, 'deleteMultiple'])->name('delete-multiple-pengguna');

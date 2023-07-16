@@ -35,7 +35,7 @@ class PenggunaController extends Controller
                 })
 
                 ->addColumn('aksi', function ($data) {
-                    $btn = ' <a  href="' . route('pengguna.edit', $data->id) . '" class="btn btn-sm btn-white text-success me-2"><i class="far fa-edit me-1"></i>Edit</a>';
+                    $btn = ' <a href="' . route('pengguna.edit', $data->id) . '" class="btn btn-sm btn-white text-success me-2"><i class="far fa-edit me-1"></i>Edit</a>';
                     $btn = $btn . '<button type="button" class="btn btn-sm btn-white text-danger me-2" data-id="' . $data->id . '" id="btnHapus"><i class="far fa-trash-alt me-1"></i>Hapus</button>';
                     return $btn;
                 })

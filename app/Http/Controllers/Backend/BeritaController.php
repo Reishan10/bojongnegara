@@ -65,14 +65,22 @@ class BeritaController extends Controller
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 if ($file->isValid()) {
+                    // $guessExtension = $request->file('image')->guessExtension();
+                    // $request->file('image')->storeAs('public/thumbnail', 'Thumbnail - ' . $request->title . '.' . $guessExtension);
+
                     $guessExtension = $request->file('image')->guessExtension();
-                    $request->file('image')->storeAs('thumbnail', 'Thumbnail - ' . $request->title . '.' . $guessExtension, 'public');
+                    $filename = 'thumbnail-' . $request->title . '-' .  time() . '.' . $guessExtension;
+
+                    $path = $request->file('image')->storeAs('public/thumbnail', $filename);
+
+                    $publicPath = 'public/' . $path;
+                    $publicThumbnailPath = str_replace('storage', 'storage/app/public', $publicPath);
 
                     $berita = new Berita();
                     $berita->title = $request->title;
                     $berita->content = $request->content;
                     $berita->description = Str::limit(strip_tags(htmlspecialchars_decode($berita->content)), 100);
-                    $berita->image = 'Thumbnail - ' . $request->title . '.' . $guessExtension;
+                    $berita->image = $publicThumbnailPath;
                     $berita->kategori_id = $request->kategori;
                     $berita->tag = implode(',', $request->tag);
                     $berita->slug = $request->slug;

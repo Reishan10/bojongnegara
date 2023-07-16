@@ -24,20 +24,22 @@
                             <h5 class="card-title">Nonaktif Akun</h5>
                         </div>
                         <div class="card-body">
-                            <form id="form">
-                                <div class="row form-group">
-                                    <p>Apakah anda yakin ingin menonaktifkan akun ?</p>
-                                </div>
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-danger" id="simpan">Nonaktifkan Akun</button>
-                                </div>
-                            </form>
+                            <div class="row form-group">
+                                <p>Apakah anda yakin ingin menonaktifkan akun ?</p>
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-danger" id="btnNonaktif">Nonaktifkan Akun</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 
     <script>
         $(document).ready(function() {
@@ -47,34 +49,52 @@
                 }
             });
 
-            $('#form').submit(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "{{ route('pengaturan.updateStatus') }}",
-                    type: "POST",
-                    beforeSend: function() {
-                        $('#simpan').attr('disable', 'disabled');
-                        $('#simpan').text('Proses...');
-                    },
-                    complete: function() {
-                        $('#simpan').removeAttr('disable');
-                        $('#simpan').html('Simpan');
-                    },
-                    success: function(response) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses',
-                            text: response.success,
-                        }).then(function() {
-                            top.location.href = "{{ route('logout') }}";
+            $('body').on('click', '#btnNonaktif', function() {
+                Swal.fire({
+                    title: 'Nonaktifkan Akun',
+                    text: "Apakah anda yakin?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Nonaktifkan!',
+                    cancelButtonText: 'Batal',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ route('pengaturan.updateStatus') }}",
+                            type: "POST",
+                            beforeSend: function() {
+                                $('#simpan').attr('disable', 'disabled');
+                                $('#simpan').text('Proses...');
+                            },
+                            complete: function() {
+                                $('#simpan').removeAttr('disable');
+                                $('#simpan').html('Simpan');
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Sukses',
+                                    text: response.success,
+                                }).then(function() {
+                                    logoutUser();
+                                });
+                            },
+                            error: function(xhr, ajaxOptions, thrownError) {
+                                console.error(xhr.status + "\n" + xhr.responseText +
+                                    "\n" +
+                                    thrownError);
+                            }
                         });
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
-                            thrownError);
                     }
                 });
             });
         });
+
+        function logoutUser() {
+            var logoutForm = document.getElementById('logout-form');
+            logoutForm.submit();
+        }
     </script>
 @endsection
