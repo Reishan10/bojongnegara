@@ -33,7 +33,7 @@
                         <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                             <div class="blog grid-blog flex-fill">
                                 <div class="blog-image">
-                                    <a href="blog-details.html">
+                                    <a href="#">
                                         <img class="img-fluid" src="{{ asset('storage/thumbnail/' . $row->image) }}"
                                             alt="Thumbnail - {{ $row->title }}" alt="Post Image">
                                     </a>
@@ -46,7 +46,7 @@
                                     <ul class="entry-meta meta-item">
                                         <li>
                                             <div class="post-author">
-                                                <a href="profile.html">
+                                                <a href="{{ route('pengaturan.profile') }}">
                                                     <img src="{{ $row->user->avatar == '' ? 'https://ui-avatars.com/api/?background=random&name=' . $row->user->name : asset('storage/avatar/' . auth()->user()->avatar) }}"
                                                         alt="Post Author">
                                                     <span>

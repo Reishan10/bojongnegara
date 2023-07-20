@@ -24,7 +24,7 @@ class PengaturanController extends Controller
             [
                 'name' => 'required|string',
                 'email' => 'required|string|unique:users,email,' . $id,
-                'foto' => 'image|mimes:jpg,png,jpeg,webp,svg',
+                'foto' => 'image|mimes:jpg,png,jpeg,webp,svgfile|max:5120',
                 'no_telepon' => 'required',
                 'gender' => 'required',
                 'address' => 'required',
@@ -35,6 +35,7 @@ class PengaturanController extends Controller
                 'email.unique' => 'Email sudah tersedia!',
                 'foto.image' => 'File harus berupa gambar!, ',
                 'foto.mimes' => 'Gambar yang diunggah harus dalam format JPG, PNG, JPEG, WEBP, atau SVG.',
+                'foto.max' => 'Maksimal ukuran foto 5 MB',
                 'no_telepon.required' => 'Silakan isi no telepon terlebih dahulu!',
                 'gender.required' => 'Silakan isi jenis kelamin terlebih dahulu!',
                 'address.required' => 'Silakan isi alamat terlebih dahulu!',

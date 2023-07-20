@@ -43,7 +43,7 @@ class BeritaController extends Controller
             [
                 'title' => 'required|string|unique:berita,title',
                 'content' => 'required|string',
-                'image' => 'image|mimes:jpg,png,jpeg,webp,svg',
+                'image' => 'image|mimes:jpg,png,jpeg,webp,svg|file|max:5120',
                 'kategori' => 'required|string',
                 'tag' => 'required|array',
                 'tag.*' => 'required|string|distinct',
@@ -54,6 +54,7 @@ class BeritaController extends Controller
                 'content.required' => 'Silakan isi konten terlebih dahulu!',
                 'image.image' => 'File harus berupa gambar!, ',
                 'image.mimes' => 'Gambar yang diunggah harus dalam format JPG, PNG, JPEG, WEBP, atau SVG.',
+                'image.max' => 'Maksimal ukuran foto 5 MB',
                 'kategori.required' => 'Silakan pilih kategori terlebih dahulu!',
                 'tag.required' => 'Silakan pilih tag terlebih dahulu!',
             ]
@@ -65,22 +66,14 @@ class BeritaController extends Controller
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
                 if ($file->isValid()) {
-                    // $guessExtension = $request->file('image')->guessExtension();
-                    // $request->file('image')->storeAs('public/thumbnail', 'Thumbnail - ' . $request->title . '.' . $guessExtension);
-
                     $guessExtension = $request->file('image')->guessExtension();
-                    $filename = 'thumbnail-' . $request->title . '-' .  time() . '.' . $guessExtension;
-
-                    $path = $request->file('image')->storeAs('public/thumbnail', $filename);
-
-                    $publicPath = 'public/' . $path;
-                    $publicThumbnailPath = str_replace('storage', 'storage/app/public', $publicPath);
-
+                    $request->file('image')->storeAs('thumbnail/', 'Thumbnail - ' . $request->title . '.' . $guessExtension, 'public');
+                    
                     $berita = new Berita();
                     $berita->title = $request->title;
                     $berita->content = $request->content;
                     $berita->description = Str::limit(strip_tags(htmlspecialchars_decode($berita->content)), 100);
-                    $berita->image = $publicThumbnailPath;
+                    $berita->image = 'Thumbnail - ' . $request->title . '.' . $guessExtension;
                     $berita->kategori_id = $request->kategori;
                     $berita->tag = implode(',', $request->tag);
                     $berita->slug = $request->slug;
@@ -123,7 +116,7 @@ class BeritaController extends Controller
             [
                 'title' => 'required|string|unique:berita,title,' . $id,
                 'content' => 'required|string',
-                'image' => 'image|mimes:jpg,png,jpeg,webp,svg',
+                'image' => 'image|mimes:jpg,png,jpeg,webp,svg|file|max:5120',
                 'kategori' => 'required|string',
                 'tag' => 'required|array',
                 'tag.*' => 'required|string|distinct',
@@ -134,6 +127,7 @@ class BeritaController extends Controller
                 'content.required' => 'Silakan isi konten terlebih dahulu!',
                 'image.image' => 'File harus berupa gambar!, ',
                 'image.mimes' => 'Gambar yang diunggah harus dalam format JPG, PNG, JPEG, WEBP, atau SVG.',
+                'image.max' => 'Maksimal ukuran foto 5 MB',
                 'kategori.required' => 'Silakan pilih kategori terlebih dahulu!',
                 'tag.required' => 'Silakan pilih tag terlebih dahulu!',
             ]
