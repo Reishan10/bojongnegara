@@ -72,7 +72,7 @@ class LoginController extends Controller
             if ($user->type == 'Administrator') {
                 return redirect()->route('dashboard.index');
             } elseif ($user->type == 'Perangkat') {
-                dd('Perangkat');
+                return redirect()->route('dashboard.index');
             } else {
                 return redirect()->intended();
             }

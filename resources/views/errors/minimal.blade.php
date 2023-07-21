@@ -16,23 +16,8 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/css/style.css">
 </head>
 
-<body>
-
-    <div class="main-wrapper login-body">
-        <div class="login-wrapper">
-            <div class="container">
-                <img class="img-fluid logo-dark mb-2" src="assets/img/logo/LOGO-KABUPATEN-CIREBON.png" alt="Logo"
-                    width="80">
-                <div class="loginbox">
-                    <div class="login-right">
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+<body class="error-page">
+    @yield('content')
     <script src="{{ asset('assets') }}/js/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('assets') }}/js/bootstrap.bundle.min.js"></script>

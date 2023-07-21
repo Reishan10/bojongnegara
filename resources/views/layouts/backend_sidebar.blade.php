@@ -44,9 +44,12 @@
                     <a href="{{ route('layanan.index') }}"><i class="fa-solid fa-thumbs-up"></i>
                         <span>Layanan</span></a>
                 </li>
-                <li class="{{ request()->is('pengguna*') ? 'active' : '' }}">
-                    <a href="{{ route('pengguna.index') }}"><i class="fa-solid fa-users"></i> <span>Pengguna</span></a>
-                </li>
+                @if (auth()->user()->type == 'Administrator')
+                    <li class="{{ request()->is('pengguna*') ? 'active' : '' }}">
+                        <a href="{{ route('pengguna.index') }}"><i class="fa-solid fa-users"></i>
+                            <span>Pengguna</span></a>
+                    </li>
+                @endif
                 <li class="{{ request()->is('pengaturan*') ? 'active' : '' }}">
                     <a href="{{ route('pengaturan.profile') }}"><i data-feather="settings"></i>
                         <span>Pengaturan</span></a>
