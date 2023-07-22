@@ -18,7 +18,7 @@
             </div>
         </div><!-- End Breadcrumbs -->
 
-        
+
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact">
             <div class="container">
@@ -72,30 +72,29 @@
                     </div>
 
                     <div class="col-lg-8">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form id="form" class="php-email-form">
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Your Name" required>
+                                    <input type="text" name="name" class="form-control" id="name" name="name"
+                                        placeholder="Nama lengkap">
+                                    <div class="errorName invalid-feedback"></div>
                                 </div>
                                 <div class="col-md-6 form-group mt-3 mt-md-0">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Your Email" required>
+                                    <input type="number" class="form-control" name="no_telepon" id="no_telepon"
+                                        placeholder="No telepon">
+                                    <div class="errorNoTelepon invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="text" class="form-control" name="subject" id="subject"
-                                    placeholder="Subject" required>
+                                    placeholder="Subject">
+                                <div class="errorSubject invalid-feedback"></div>
                             </div>
                             <div class="form-group mt-3">
-                                <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+                                <textarea class="form-control" name="pesan" id="pesan" placeholder="Pesan"></textarea>
+                                <div class="errorPesan invalid-feedback"></div>
                             </div>
-                            <div class="my-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
+                            <div class="text-center"><button type="submit" id="kirim">Kirim Pesan</button></div>
                         </form>
                     </div><!-- End Contact Form -->
 
@@ -103,6 +102,80 @@
 
             </div>
         </section><!-- End Contact Section -->
-     
+
     </main><!-- End #main -->
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{{ route('frontend.kontak.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#kirim').attr('disabled', 'disabled');
+                        $('#kirim').text('Proses...');
+                    },
+                    complete: function() {
+                        $('#kirim').removeAttr('disabled');
+                        $('#kirim').html('Kirim Pesan');
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.name) {
+                                $('#name').addClass('is-invalid');
+                                $('.errorName').html(response.errors.name);
+                            } else {
+                                $('#name').removeClass('is-invalid');
+                                $('.errorName').html('');
+                            }
+
+                            if (response.errors.no_telepon) {
+                                $('#no_telepon').addClass('is-invalid');
+                                $('.errorNoTelepon').html(response.errors.no_telepon);
+                            } else {
+                                $('#no_telepon').removeClass('is-invalid');
+                                $('.errorNoTelepon').html('');
+                            }
+
+                            if (response.errors.subject) {
+                                $('#subject').addClass('is-invalid');
+                                $('.errorSubject').html(response.errors.subject);
+                            } else {
+                                $('#subject').removeClass('is-invalid');
+                                $('.errorSubject').html('');
+                            }
+
+                            if (response.errors.pesan) {
+                                $('#pesan').addClass('is-invalid');
+                                $('.errorPesan').html(response.errors.pesan);
+                            } else {
+                                $('#pesan').removeClass('is-invalid');
+                                $('.errorPesan').html('');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Data berhasil kirim',
+                            }).then(function() {
+                                top.location.href =
+                                    "{{ route('frontend.kontak.index') }}";
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

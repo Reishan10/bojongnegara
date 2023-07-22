@@ -8,6 +8,7 @@
     <title>@yield('title') - Bojongnegara</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta content="{{ csrf_token() }}" name="csrf-token">
 
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}">
@@ -32,6 +33,9 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet">
+    
+    <script src="{{ asset('assets') }}/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -47,7 +51,7 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{{ route('frontend.beranda.index') }}">Beranda</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}" href="{{ route('frontend.beranda.index') }}">Beranda</a></li>
                     <li class="dropdown"><a href="#"><span>Informasi</span> <i
                                 class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
@@ -55,9 +59,9 @@
                             <li><a href="{{ route('frontend.fasilitas.index') }}">Fasilitas</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
-                    <li><a class="nav-link scrollto" href="{{ route('frontend.berita.index') }}">Berita</a></li>
-                    <li><a class="nav-link scrollto" href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('layanan*') ? 'active' : '' }}" href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('berita*') ? 'active' : '' }}" href="{{ route('frontend.berita.index') }}">Berita</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('kontak*') ? 'active' : '' }}" href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle d-none"></i>
             </nav><!-- .navbar -->

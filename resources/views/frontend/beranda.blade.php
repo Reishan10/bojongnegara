@@ -19,7 +19,7 @@
                 <div class="section-header">
                     <h2>Tentang</h2>
                     <!-- <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam voluptas
-                asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> -->
+                                            asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> -->
                 </div>
 
                 <div class="row g-4 g-lg-5" data-aos="fade-up" data-aos-delay="200">
@@ -153,59 +153,24 @@
                         </div>
 
                         <div class="accordion accordion-flush px-xl-5" id="faqlist">
-
+                            @forelse ($layanan as $row)
                             <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
                                 <h3 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#faq-content-1">
                                         <i class="bi bi-question-circle question-icon"></i>
-                                        Layanan Administrasi Desa
+                                        {{ $row->name }}
                                     </button>
                                 </h3>
                                 <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
                                     <div class="accordion-body">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto, impedit debitis
-                                        consequatur dolorem, ab doloremque consequuntur aliquid harum quibusdam libero
-                                        voluptas pariatur dignissimos? Modi perspiciatis facere, iusto iste odit
-                                        eligendi?
+                                        {!! $row->deskripsi !!}
                                     </div>
                                 </div>
                             </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-2">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Layanan Informasi Umum Desa
-                                    </button>
-                                </h3>
-                                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat soluta
-                                        temporibus tempora sint dolore qui quasi corporis minima quos rerum veritatis,
-                                        aperiam ab, similique repellendus cumque sed unde dolorem? Nihil?
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-3">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Layanan Kependudukan Desa
-                                    </button>
-                                </h3>
-                                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, molestiae
-                                        rem. Quo voluptatibus illo est. Sapiente aliquam voluptates architecto
-                                        accusantium, cum repellendus pariatur, ullam laboriosam dolores, ratione iure.
-                                        Omnis, quae!
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
+                            @empty
+                                <h3 class="text-center mt-4">Data tidak tersedia</h3>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -334,30 +299,29 @@
                     </div>
 
                     <div class="col-lg-8">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form id="form" class="php-email-form">
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Your Name" required>
+                                        name="name" placeholder="Nama lengkap">
+                                    <div class="errorName invalid-feedback"></div>
                                 </div>
                                 <div class="col-md-6 form-group mt-3 mt-md-0">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Your Email" required>
+                                    <input type="number" class="form-control" name="no_telepon" id="no_telepon"
+                                        placeholder="No telepon">
+                                    <div class="errorNoTelepon invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="form-group mt-3">
                                 <input type="text" class="form-control" name="subject" id="subject"
-                                    placeholder="Subject" required>
+                                    placeholder="Subject">
+                                <div class="errorSubject invalid-feedback"></div>
                             </div>
                             <div class="form-group mt-3">
-                                <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+                                <textarea class="form-control" name="pesan" id="pesan" placeholder="Pesan"></textarea>
+                                <div class="errorPesan invalid-feedback"></div>
                             </div>
-                            <div class="my-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
+                            <div class="text-center"><button type="submit" id="kirim">Kirim Pesan</button></div>
                         </form>
                     </div><!-- End Contact Form -->
 
@@ -367,4 +331,79 @@
         </section><!-- End Contact Section -->
 
     </main><!-- End #main -->
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{{ route('frontend.kontak.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('#kirim').attr('disabled', 'disabled');
+                        $('#kirim').text('Proses...');
+                    },
+                    complete: function() {
+                        $('#kirim').removeAttr('disabled');
+                        $('#kirim').html('Kirim Pesan');
+                    },
+                    success: function(response) {
+                        if (response.errors) {
+                            if (response.errors.name) {
+                                $('#name').addClass('is-invalid');
+                                $('.errorName').html(response.errors.name);
+                            } else {
+                                $('#name').removeClass('is-invalid');
+                                $('.errorName').html('');
+                            }
+
+                            if (response.errors.no_telepon) {
+                                $('#no_telepon').addClass('is-invalid');
+                                $('.errorNoTelepon').html(response.errors.no_telepon);
+                            } else {
+                                $('#no_telepon').removeClass('is-invalid');
+                                $('.errorNoTelepon').html('');
+                            }
+
+                            if (response.errors.subject) {
+                                $('#subject').addClass('is-invalid');
+                                $('.errorSubject').html(response.errors.subject);
+                            } else {
+                                $('#subject').removeClass('is-invalid');
+                                $('.errorSubject').html('');
+                            }
+
+                            if (response.errors.pesan) {
+                                $('#pesan').addClass('is-invalid');
+                                $('.errorPesan').html(response.errors.pesan);
+                            } else {
+                                $('#pesan').removeClass('is-invalid');
+                                $('.errorPesan').html('');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sukses',
+                                text: 'Data berhasil kirim',
+                            }).then(function() {
+                                top.location.href =
+                                    "{{ route('frontend.beranda.index') }}";
+                            });
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.error(xhr.status + "\n" + xhr.responseText + "\n" +
+                            thrownError);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
