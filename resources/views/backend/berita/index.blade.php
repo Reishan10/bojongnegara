@@ -33,7 +33,7 @@
                         <div class="col-md-6 col-xl-4 col-sm-12 d-flex">
                             <div class="blog grid-blog flex-fill">
                                 <div class="blog-image">
-                                    <a href="#">
+                                    <a href="{{ route('frontend.berita.detail', $row->slug) }}" target="_blank">
                                         <img class="img-fluid" src="{{ asset('storage/thumbnail/' . $row->image) }}"
                                             alt="Thumbnail - {{ $row->title }}" alt="Post Image">
                                     </a>
@@ -60,7 +60,7 @@
                                             </div>
                                         </li>
                                     </ul>
-                                    <h3 class="blog-title"><a href="blog-details.html">
+                                    <h3 class="blog-title"><a href="{{ route('frontend.berita.detail', $row->slug) }}" target="_blank">
                                             {{ $row->title }}</a>
                                     </h3>
                                     <p>{!! \Illuminate\Support\Str::limit(

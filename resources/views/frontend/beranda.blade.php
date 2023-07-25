@@ -19,7 +19,7 @@
                 <div class="section-header">
                     <h2>Tentang</h2>
                     <!-- <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam voluptas
-                                            asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> -->
+                                                                            asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> -->
                 </div>
 
                 <div class="row g-4 g-lg-5" data-aos="fade-up" data-aos-delay="200">
@@ -152,26 +152,27 @@
                             <h3>Layanan desa <strong>Bojongnegara</strong></h3>
                         </div>
 
-                        <div class="accordion accordion-flush px-xl-5" id="faqlist">
-                            @forelse ($layanan as $row)
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-1">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        {{ $row->name }}
-                                    </button>
-                                </h3>
-                                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        {!! $row->deskripsi !!}
+                        @forelse ($layanan as $row)
+                            <div class="accordion accordion-flush px-xl-5" id="faqlist-{{ $row->id }}">
+                                <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
+                                    <h3 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#faq-content-{{ $row->id }}">
+                                            <i class="bi bi-question-circle question-icon"></i>
+                                            {{ $row->name }}
+                                        </button>
+                                    </h3>
+                                    <div id="faq-content-{{ $row->id }}" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqlist-{{ $row->id }}">
+                                        <div class="accordion-body">
+                                            {!! $row->deskripsi !!}
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- # Faq item-->
-                            @empty
-                                <h3 class="text-center mt-4">Data tidak tersedia</h3>
-                            @endforelse
-                        </div>
+                                </div><!-- # Faq item-->
+                            </div>
+                        @empty
+                            <h3 class="text-center mt-4">Data tidak tersedia</h3>
+                        @endforelse
                     </div>
                 </div>
         </section><!-- End F.A.Q Section -->
@@ -187,61 +188,31 @@
                 </div>
 
                 <div class="row">
-
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="post-box">
-                            <div class="post-img"><img src="{{ asset('assets') }}/img/blog/blog-1.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <div class="meta">
-                                <span class="post-date">Tue, December 12</span>
-                                <span class="post-author"> / Julia Parker</span>
+                    @forelse ($berita as $row)
+                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                            <div class="post-box">
+                                <div class="post-img"><img src="{{ asset('storage/thumbnail/' . $row->image) }}"
+                                        alt="Thumbnail - {{ $row->title }}" class="img-fluid"></div>
+                                <div class="meta">
+                                    <span
+                                        class="post-date">{{ $formattedDate = \Carbon\Carbon::parse($row->created_at)->locale('id')->isoFormat('D MMMM Y') }}</span>
+                                    <span class="post-author"> / {{ $row->user->name }}</span>
+                                </div>
+                                <h3 class="post-title">{{ $row->title }}</h3>
+                                {!! \Illuminate\Support\Str::limit(
+                                    strip_tags(htmlspecialchars_decode($row->content)),
+                                    $limit = 200,
+                                    $end = '...',
+                                ) !!}
+                                <a href="{{ route('frontend.berita.detail', $row->slug) }}"
+                                    class="readmore stretched-link"><span>Baca Selengkapnya</span><i
+                                        class="bi bi-arrow-right"></i></a>
                             </div>
-                            <h3 class="post-title">Eum ad dolor et. Autem aut fugiat debitis voluptatem consequuntur
-                                sit</h3>
-                            <p>Illum voluptas ab enim placeat. Adipisci enim velit nulla. Vel omnis laudantium.
-                                Asperiores eum ipsa
-                                est officiis. Modi cupiditate exercitationem qui magni est...</p>
-                            <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
-                                    class="bi bi-arrow-right"></i></a>
                         </div>
-                    </div>
-
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
-                        <div class="post-box">
-                            <div class="post-img"><img src="{{ asset('assets') }}/img/blog/blog-2.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <div class="meta">
-                                <span class="post-date">Fri, September 05</span>
-                                <span class="post-author"> / Mario Douglas</span>
-                            </div>
-                            <h3 class="post-title">Et repellendus molestiae qui est sed omnis voluptates magnam</h3>
-                            <p>Voluptatem nesciunt omnis libero autem tempora enim ut ipsam id. Odit quia ab eum
-                                assumenda. Quisquam
-                                omnis aliquid necessitatibus tempora consectetur doloribus...</p>
-                            <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="600">
-                        <div class="post-box">
-                            <div class="post-img"><img src="{{ asset('assets') }}/img/blog/blog-3.jpg" class="img-fluid"
-                                    alt=""></div>
-                            <div class="meta">
-                                <span class="post-date">Tue, July 27</span>
-                                <span class="post-author"> / Lisa Hunter</span>
-                            </div>
-                            <h3 class="post-title">Quia assumenda est et veritatis aut quae</h3>
-                            <p>Quia nam eaque omnis explicabo similique eum quaerat similique laboriosam. Quis omnis
-                                repellat sed quae
-                                consectetur magnam veritatis dicta nihil...</p>
-                            <a href="blog-details.html" class="readmore stretched-link"><span>Read More</span><i
-                                    class="bi bi-arrow-right"></i></a>
-                        </div>
-                    </div>
-
+                    @empty
+                        <h3 class="text-center mt-4">Data tidak tersedia</h3>
+                    @endforelse
                 </div>
-
             </div>
 
         </section><!-- End Recent Blog Posts Section -->

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\BeritaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\KategoriController;
+use App\Http\Controllers\Backend\KontakController as BackendKontakController;
 use App\Http\Controllers\Backend\LayananController;
 use App\Http\Controllers\Backend\PengaturanController;
 use App\Http\Controllers\Backend\PenggunaController;
@@ -86,6 +87,11 @@ Route::middleware(['auth', 'user-access:Administrator,Perangkat'])->group(functi
     Route::get('/layanan/{layanan}/edit', [LayananController::class, 'edit'])->name('layanan.edit');
     Route::post('/layanan/{layanan}', [LayananController::class, 'update'])->name('layanan.update');
     Route::delete('layanan/{layanan}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+
+    // kontak pesan
+    Route::post('/kontak/delete-multiple-kontak', [BackendKontakController::class, 'deleteMultiple'])->name('delete-multiple-kontak');
+    Route::get('/kontak', [BackendKontakController::class, 'index'])->name('kontak.index');
+    Route::delete('kontak/{kontak}', [BackendKontakController::class, 'destroy'])->name('kontak.destroy');
 
     //Pengaturan
     Route::get('/pengaturan/profile', [PengaturanController::class, 'profile'])->name('pengaturan.profile');

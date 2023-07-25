@@ -33,12 +33,9 @@
                         </li>
                     </ul>
                 </li>
-
-                <li>
-                    <a href=""><i class="fa-solid fa-comment"></i> <span>Komen</span></a>
-                </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-envelope"></i> <span>Pesan</span></a>
+                <li class="{{ request()->is('kontak*') ? 'active' : '' }}">
+                    <a href="{{ route('kontak.index') }}"><i class="fa-solid fa-envelope"></i> <span>Kontak
+                            Pesan</span></a>
                 </li>
                 <li class="{{ request()->is('layanan*') ? 'active' : '' }}">
                     <a href="{{ route('layanan.index') }}"><i class="fa-solid fa-thumbs-up"></i>

@@ -11,8 +11,8 @@
                     <h2>@yield('title')</h2>
                     <ol>
                         <li><a href="{{ route('frontend.beranda.index') }}">Beranda</a></li>
-                        <li><a href="{{ route('frontend.berita.index') }}">Berita</a></li>
-                        <li>@yield('title')</li>
+                        <li><a href="{{ route('frontend.berita.index') }}">@yield('title')</a></li>
+                        <li>{{ $berita->title }}</li>
                     </ol>
                 </div>
 
@@ -40,7 +40,8 @@
                             <div class="meta-top">
                                 <ul>
                                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                            href="{{ route('frontend.berita.detail', $berita->slug) }}">{{ $berita->user->name }}</a></li>
+                                            href="{{ route('frontend.berita.detail', $berita->slug) }}">{{ $berita->user->name }}</a>
+                                    </li>
                                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
                                             href="{{ route('frontend.berita.detail', $berita->slug) }}">
                                             {{ $formattedDate = \Carbon\Carbon::parse($berita->created_at)->locale('id')->isoFormat('D MMMM Y') }}</a>
@@ -49,18 +50,18 @@
                             </div>
 
                             <div class="content">
-                               {!! $berita->content !!}
+                                {!! $berita->content !!}
                             </div><!-- End post content -->
 
                             <div class="meta-bottom">
                                 <i class="bi bi-folder"></i>
                                 <ul class="cats">
-                                    <li><a href="#">{{ $berita->kategori->name }}</a></li>
+                                    <li>{{ $berita->kategori->name }}</li>
                                 </ul>
 
                                 <i class="bi bi-tags"></i>
                                 <ul class="tags">
-                                    <li><a href="#">{{ $berita->tag }}</a></li>
+                                    <li>{{ $berita->tag }}</li>
                                 </ul>
                             </div><!-- End meta bottom -->
 
@@ -73,18 +74,22 @@
 
                             <div class="sidebar-item search-form">
                                 <h3 class="sidebar-title">Pencarian</h3>
-                                <form action="" class="mt-3">
-                                    <input type="text">
+                                <form action="{{ route('frontend.berita.search') }}" method="GET" class="mt-3">
+                                    <input type="text" name="keyword" placeholder="Cari berita...">
                                     <button type="submit"><i class="bi bi-search"></i></button>
                                 </form>
                             </div><!-- End sidebar search formn-->
 
+
+                            <!-- Tampilkan daftar kategori -->
                             <div class="sidebar-item categories">
                                 <h3 class="sidebar-title">Kategori</h3>
                                 <ul class="mt-3">
                                     @forelse ($kategori as $row)
-                                        <li><a href="#">{{ $row->name }}
-                                                <span>({{ $row->berita_count }})</span></a></li>
+                                        <li><a href="{{ route('frontend.berita.kategori', ['kategori' => $row->slug]) }}">{{ $row->name }}
+                                                <span>({{ $row->berita_count }})</span>
+                                            </a>
+                                        </li>
                                     @empty
                                         <h3 class="text-center mt-4">Data tidak tersedia</h3>
                                     @endforelse
@@ -100,7 +105,9 @@
                                             <img src="{{ asset('storage/thumbnail/' . $row->image) }}"
                                                 alt="{{ $row->title }}" class="flex-shrink-0">
                                             <div>
-                                                <h4><a href="{{ route('frontend.berita.detail', $row->slug) }}">{{ $row->title }}</a></h4>
+                                                <h4><a
+                                                        href="{{ route('frontend.berita.detail', $row->slug) }}">{{ $row->title }}</a>
+                                                </h4>
                                                 <time>
                                                     {{ $formattedDate = \Carbon\Carbon::parse($row->created_at)->locale('id')->isoFormat('D MMMM Y') }}</time>
                                             </div>
@@ -115,12 +122,14 @@
                                 <h3 class="sidebar-title">Tag</h3>
                                 <ul class="mt-3">
                                     @forelse ($tag as $row)
-                                        <li><a href="#">{{ $row->name }}</a></li>
+                                        <li><a
+                                                href="{{ route('frontend.berita.tag', ['tag' => $row->name]) }}">{{ $row->name }}</a>
+                                        </li>
                                     @empty
                                         <h3 class="text-center mt-4">Data tidak tersedia</h3>
                                     @endforelse
                                 </ul>
-                            </div><!-- End sidebar tags-->
+                            </div><!-- End sidebar tags -->
 
                         </div><!-- End Blog Sidebar -->
 

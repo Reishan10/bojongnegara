@@ -55,13 +55,11 @@
                                         </div>
 
                                         <div class="content">
-                                            <p>
                                                 {!! \Illuminate\Support\Str::limit(
                                                     strip_tags(htmlspecialchars_decode($row->content)),
                                                     $limit = 200,
                                                     $end = '...',
                                                 ) !!}
-                                            </p>
                                         </div>
 
                                         <div class="read-more mt-auto align-self-end">
@@ -144,7 +142,7 @@
                                             <img src="{{ asset('storage/thumbnail/' . $row->image) }}"
                                                 alt="{{ $row->title }}" class="flex-shrink-0">
                                             <div>
-                                                <h4><a href="blog-post.html">{{ $row->title }}</a></h4>
+                                                <h4><a href="{{ route('frontend.berita.detail', $row->slug) }}">{{ $row->title }}</a></h4>
                                                 <time>
                                                     {{ $formattedDate = \Carbon\Carbon::parse($row->created_at)->locale('id')->isoFormat('D MMMM Y') }}</time>
                                             </div>
