@@ -21,8 +21,8 @@
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
             <div class="container">
-                <img class="img-fluid logo-dark mb-2" src="assets/img/logo/LOGO-KABUPATEN-CIREBON.png" alt="Logo"
-                    width="80">
+                <img class="img-fluid logo-dark mb-2" src="{{ asset('assets') }}/img/logo/LOGO-KABUPATEN-CIREBON.png"
+                    alt="Logo" width="80">
                 <div class="loginbox">
                     <div class="login-right">
                         @yield('content')

@@ -2,17 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>@yield('title') - Bojongnegara</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}" />
+    <meta property="og:image:secure_url" content="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}" />
     <meta content="{{ csrf_token() }}" name="csrf-token">
 
+    <title>@yield('title') - Bojongnegara</title>
+
     <!-- Favicons -->
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}">
-    <link href="{{ asset('assets') }}/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +35,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet">
-    
+
     <script src="{{ asset('assets') }}/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -43,7 +45,8 @@
     <header id="header" class="header fixed-top" data-scrollto-offset="0">
         <div class="container-fluid d-flex align-items-center justify-content-between">
 
-            <a href="{{ route('frontend.beranda.index') }}" class="logo d-flex align-items-center scrollto me-auto me-lg-5">
+            <a href="{{ route('frontend.beranda.index') }}"
+                class="logo d-flex align-items-center scrollto me-auto me-lg-5">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <img src="{{ asset('assets/img/logo/LOGO-KABUPATEN-CIREBON.png') }}" alt="">
                 {{-- <h1>Bojongnegara<span>.</span></h1> --}}
@@ -51,7 +54,8 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}" href="{{ route('frontend.beranda.index') }}">Beranda</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('/') ? 'active' : '' }}"
+                            href="{{ route('frontend.beranda.index') }}">Beranda</a></li>
                     <li class="dropdown"><a href="#"><span>Informasi</span> <i
                                 class="bi bi-chevron-down dropdown-indicator"></i></a>
                         <ul>
@@ -59,9 +63,12 @@
                             <li><a href="{{ route('frontend.fasilitas.index') }}">Fasilitas</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto {{ request()->is('layanan*') ? 'active' : '' }}" href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
-                    <li><a class="nav-link scrollto {{ request()->is('berita*') ? 'active' : '' }}" href="{{ route('frontend.berita.index') }}">Berita</a></li>
-                    <li><a class="nav-link scrollto {{ request()->is('kontak*') ? 'active' : '' }}" href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('layanan*') ? 'active' : '' }}"
+                            href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('berita*') ? 'active' : '' }}"
+                            href="{{ route('frontend.berita.index') }}">Berita</a></li>
+                    <li><a class="nav-link scrollto {{ request()->is('kontak*') ? 'active' : '' }}"
+                            href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle d-none"></i>
             </nav><!-- .navbar -->
@@ -69,7 +76,7 @@
         </div>
     </header><!-- End Header -->
 
-   @yield('content')
+    @yield('content')
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
@@ -93,18 +100,23 @@
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>Informasi</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="{{ route('frontend.strukturOrganisasi.index') }}">Struktur Organisasi</a>
+                            <li><i class="bi bi-chevron-right"></i> <a
+                                    href="{{ route('frontend.strukturOrganisasi.index') }}">Struktur Organisasi</a>
                             </li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="{{ route('frontend.fasilitas.index') }}">Fasilitas</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a
+                                    href="{{ route('frontend.fasilitas.index') }}">Fasilitas</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>Umum</h4>
                         <ul>
-                            <li><i class="bi bi-chevron-right"></i> <a href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="{{ route('frontend.berita.index') }}">Berita</a></li>
-                            <li><i class="bi bi-chevron-right"></i> <a href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a
+                                    href="{{ route('frontend.layanan.index') }}">Layanan</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a
+                                    href="{{ route('frontend.berita.index') }}">Berita</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a
+                                    href="{{ route('frontend.kontak.index') }}">Kontak</a></li>
                         </ul>
                     </div>
                 </div>

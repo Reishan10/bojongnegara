@@ -68,7 +68,7 @@ class BeritaController extends Controller
                 if ($file->isValid()) {
                     $guessExtension = $request->file('image')->guessExtension();
                     $request->file('image')->storeAs('thumbnail/', 'Thumbnail - ' . $request->title . '.' . $guessExtension, 'public');
-                    
+
                     $berita = new Berita();
                     $berita->title = $request->title;
                     $berita->content = $request->content;
@@ -99,6 +99,7 @@ class BeritaController extends Controller
             }
         }
     }
+
 
     public function edit($id)
     {
